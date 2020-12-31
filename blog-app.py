@@ -189,7 +189,9 @@ if len(stock_data.columns) > 0:
 
   for i in range(1, len(AdjustedR.index)):
     AdjustedR['Portfolio Value - Weighted'][i] = AdjustedR['Portfolio Value - Weighted'][i-1] + AdjustedR['Total AR'][i-1]
-
+  
+  st.write("""## BACKTESTING""")
+           
   plt.figure(figsize=(10, 5))
   plt.plot(AdjustedR['Portfolio Value - Weighted'], c='red', label='Weighted Portfolio Value')
   plt.plot(daily_simple_returns_equal['Portfolio Value - Equal'], c='black', label='Equal Weighted Portfolio Value')
