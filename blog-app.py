@@ -234,7 +234,7 @@ if len(stock_data.columns) > 0:
   st.pyplot()
 
   if AdjustedR['Portfolio Value - Weighted'][-1] > daily_simple_returns_equal['Portfolio Value - Equal'][-1]:
-    st.write(f"The model was right! You would've made an extra ${round(AdjustedR['Portfolio Value - Weighted'][-1] - daily_simple_returns_equal['Portfolio Value - Equal'][-1], 2)} extra!")
+    st.write(f"The model was right! You would've made an extra ${round(AdjustedR['Portfolio Value - Weighted'][-1] - daily_simple_returns_equal['Portfolio Value - Equal'][-1], 2)}!")
   else:
     st.write('The pandemic really hit hard! Not even the model could have predicted it.')
 else:
