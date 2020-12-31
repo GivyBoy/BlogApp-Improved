@@ -1,6 +1,7 @@
 import pandas as pd
 from pandas_datareader import data as web
 import numpy as np
+import streamlit as st
 from datetime import datetime
 import matplotlib.pyplot as plt
 plt.style.use('seaborn-whitegrid')
