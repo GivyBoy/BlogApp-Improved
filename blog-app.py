@@ -9,6 +9,7 @@ plt.style.use('seaborn-whitegrid')
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
 st.write("""# Portfolio Optimization""")
+st.write("This web app seeks to construct the best weighted portfolio, given the names of a portfolio of stocks")
 
 if st.checkbox('Tap/Click to see examples of stock tickers'):
   examples = pd.read_csv('stocks.csv')
@@ -75,6 +76,7 @@ if len(stock_data.columns) > 0:
   
   st.write("""## Efficient Markets Frontier""")
   st.write(f'The number of portfolios being used is: {number_of_portfolios}')
+  st.write("Data from 2015 - 2019 is used in the analysis below.")
 
   for portfolio in range(number_of_portfolios):
           # generate a w random weight of length of number of stocks
@@ -191,6 +193,7 @@ if len(stock_data.columns) > 0:
     AdjustedR['Portfolio Value - Weighted'][i] = AdjustedR['Portfolio Value - Weighted'][i-1] + AdjustedR['Total AR'][i-1]
   
   st.write("""## BACKTESTING""")
+  st.write("The Weighted Portfolio is what the model above recommends, while the Equal Weighted Portfolio assumes that the portfolio is split evenly among all stocks.")
            
   plt.figure(figsize=(10, 5))
   plt.plot(AdjustedR['Portfolio Value - Weighted'], c='red', label='Weighted Portfolio Value')
@@ -224,6 +227,7 @@ if len(stock_data.columns) > 0:
   logReturns['Equal Weights'] = daily_simple_returns_equal['Portfolio Value - Equal']
 
   logReturns = np.log(logReturns)
+           
 
   plt.figure(figsize=(10, 5))
   plt.plot(logReturns['Adjusted Weights'], c='red', label='Weighted Portfolio Value')
