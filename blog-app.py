@@ -9,7 +9,7 @@ plt.style.use('seaborn-whitegrid')
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
 st.write("""# Portfolio Optimization""")
-st.write("This web application seeks to construct the best weighted portfolio, using the Modern Portfolio Theory and the Efficient Markets Hypothesis, given the stock tickers of a portfolio of stocks")
+st.write("## This web application seeks to construct the best weighted portfolio, using the Modern Portfolio Theory and the Efficient Markets Hypothesis, given the stock tickers of a portfolio of stocks.")
 
 if st.checkbox('Tap/Click to see examples of stock tickers'):
   examples = pd.read_csv('stocks.csv')
@@ -75,8 +75,8 @@ if len(stock_data.columns) > 0:
   portfolio_weights = []
   
   st.write("""## Efficient Markets Frontier""")
-  st.write(f'The number of portfolios being used is: {number_of_portfolios}')
-  st.write("Data from 2015 - 2019 is being used in the analysis below.")
+  st.write(f'## The number of portfolios being used is: {number_of_portfolios}')
+  st.write("## Data from 2015 - 2019 is being used in the analysis below.")
 
   for portfolio in range(number_of_portfolios):
           # generate a w random weight of length of number of stocks
@@ -192,9 +192,9 @@ if len(stock_data.columns) > 0:
   for i in range(1, len(AdjustedR.index)):
     AdjustedR['Portfolio Value - Weighted'][i] = AdjustedR['Portfolio Value - Weighted'][i-1] + AdjustedR['Total AR'][i-1]
   
-  st.write("""## BACKTESTING""")
-  st.write("The Weighted Portfolio is what the model above recommends, while the Equal Weighted Portfolio assumes that the portfolio is split evenly among all stocks.")
-  st.write("The data being used is from the start of the trading year in 2020, until the most recent completed trading day. It serves as a means of testing whether the recommendations given by the model is profitable, relative to some other metrics.")
+  st.write("""# BACKTESTING""")
+  st.write("## The Weighted Portfolio is what the model above recommends, while the Equal Weighted Portfolio assumes that the portfolio is split evenly among all stocks.")
+  st.write("## The data being used is from the start of the trading year in 2020, until the most recent completed trading day. It serves as a means of testing whether the recommendations given by the model is profitable, relative to some other metrics.")
            
   plt.figure(figsize=(10, 5))
   plt.plot(AdjustedR['Portfolio Value - Weighted'], c='red', label='Weighted Portfolio Value')
@@ -241,9 +241,9 @@ if len(stock_data.columns) > 0:
   st.pyplot()
 
   if AdjustedR['Portfolio Value - Weighted'][-1] > daily_simple_returns_equal['Portfolio Value - Equal'][-1]:
-    st.write(f"The model was right! You would've made an extra ${round(AdjustedR['Portfolio Value - Weighted'][-1] - daily_simple_returns_equal['Portfolio Value - Equal'][-1], 2)}!")
+    st.write(f"## The model was right! You would've made an extra ${round(AdjustedR['Portfolio Value - Weighted'][-1] - daily_simple_returns_equal['Portfolio Value - Equal'][-1], 2)}!")
   else:
-    st.write('The pandemic really hit hard! Not even the model could have predicted it.')
+    st.write('## The pandemic really hit hard! Not even the model could have predicted it.')
 else:
   st.write()
 
