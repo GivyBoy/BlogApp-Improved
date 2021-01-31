@@ -67,6 +67,7 @@ if len(stock_data.columns) > 0:
   plt.ylabel('Volatility (%)')
   plt.legend(daily_simple_returns, bbox_to_anchor=(1,1))
   st.pyplot()
+  st.write(" The graph shows the daily fluctuations (as a percent) of the stock price. Simply put, the smaller the spikes, the lower your blood pressure and stress levels will be :)")
   
   number_of_portfolios = 2000
   RF = 0
@@ -76,8 +77,10 @@ if len(stock_data.columns) > 0:
   portfolio_weights = []
   
   st.write("""## Efficient Markets Frontier""")
-  st.write(f'## The number of portfolios being used is: {number_of_portfolios}')
-  st.write("## Data from 2015 - 2019 is being used in the analysis below.")
+  st.write(f' The number of portfolios being used is: {number_of_portfolios}')
+  st.write(" Data from 2015 - 2019 is being used in the analysis below.")
+  st.write(" ")
+  st.write(" The following graphs give a visual representation of all 2000 portfolios that were computed.")
 
   for portfolio in range(number_of_portfolios):
           # generate a w random weight of length of number of stocks
@@ -206,6 +209,8 @@ if len(stock_data.columns) > 0:
   plt.ylabel('Portfolio Value ($USD)')
   plt.legend()
   st.pyplot()
+  st.write(" ")
+  st.write(" This graphs shows a comparison of the returns of both portfolios, since the beginning of 2020.")
 
   logReturns = pd.DataFrame()
 
@@ -241,6 +246,8 @@ if len(stock_data.columns) > 0:
   plt.ylabel('Portfolio Value ($USD)')
   plt.legend(loc='lower right')
   st.pyplot()
+  st.write(" ")
+  st.write(" Both portfolios are being compared to the S&P500, which is the most ubiquitous stock performane benchmark.")
 
   if AdjustedR['Portfolio Value - Weighted'][-1] > daily_simple_returns_equal['Portfolio Value - Equal'][-1]:
     st.write(f" The model was right! You would've made an extra ${round(AdjustedR['Portfolio Value - Weighted'][-1] - daily_simple_returns_equal['Portfolio Value - Equal'][-1], 2)}!")
