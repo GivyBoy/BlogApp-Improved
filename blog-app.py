@@ -245,8 +245,9 @@ if len(stock_data.columns) > 0:
   plt.ylabel('Portfolio Value ($USD)')
   plt.legend(loc='lower right')
   st.pyplot()
-  st.write(" Both portfolios are being compared to the S&P500, which is the most ubiquitous stock performane benchmark.")
-
+  st.write(" Both portfolios are being compared to the S&P500, which is the most ubiquitous stock performance benchmark.")
+  st.write('')
+           
   if AdjustedR['Portfolio Value - Weighted'][-1] > daily_simple_returns_equal['Portfolio Value - Equal'][-1]:
     st.write(f" The model was right! You would've made an extra ${round(AdjustedR['Portfolio Value - Weighted'][-1] - daily_simple_returns_equal['Portfolio Value - Equal'][-1], 2)}!")
   else:
