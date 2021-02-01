@@ -10,7 +10,7 @@ st.set_option('deprecation.showPyplotGlobalUse', False)
 st.write("""# Portfolio Optimization""")
 st.write(" This web application seeks to construct the best weighted portfolio, using the Modern Portfolio Theory and the Efficient Markets Hypothesis, given the stock tickers of a portfolio of stocks.")
 st.write(" ")
-st.write(" Copy and paste the following stock tickers in the input box (also, give it some time to load): aapl, tsla, msft, zm, amzn, jpm, gm, nflx, googl, fb")
+st.write(" As an example, you may adjust the slider to the amount that suits you, then copy and paste the following stock tickers in the input box (also, give it some time to load): aapl, tsla, msft, zm, amzn, jpm, gm, nflx, googl, fb")
 st.write(" ")
 
 if st.checkbox('Tap/Click to see examples of stock tickers'):
@@ -251,6 +251,9 @@ if len(stock_data.columns) > 0:
     st.write(f" The model was right! You would've made an extra ${round(AdjustedR['Portfolio Value - Weighted'][-1] - daily_simple_returns_equal['Portfolio Value - Equal'][-1], 2)}!")
   else:
     st.write(' The pandemic really hit hard! Not even the model could have predicted it.')
+  
+  st.write('')
+  st.write(' Created by Anthony Givans')
 else:
   st.write()
 
