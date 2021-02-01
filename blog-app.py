@@ -5,11 +5,12 @@ import streamlit as st
 from datetime import datetime
 import matplotlib.pyplot as plt
 plt.style.use('seaborn-whitegrid')
-plt.style.use('seaborn-whitegrid')
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
 st.write("""# Portfolio Optimization""")
 st.write(" This web application seeks to construct the best weighted portfolio, using the Modern Portfolio Theory and the Efficient Markets Hypothesis, given the stock tickers of a portfolio of stocks.")
+st.write(" ")
+st.write(" Copy and paste the following stock tickers in the input box (also, give it some time to load): aapl, tsla, msft, zm, amzn, jpm, gm, nflx, googl, fb")
 st.write(" ")
 
 if st.checkbox('Tap/Click to see examples of stock tickers'):
