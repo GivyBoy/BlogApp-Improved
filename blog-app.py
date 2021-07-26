@@ -8,6 +8,7 @@ plt.style.use('seaborn-whitegrid')
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
 st.write("""# Portfolio Optimization""")
+st.write("""## Created by Anthony Givans""")
 st.write(" This web application seeks to construct the best weighted portfolio, using the Modern Portfolio Theory and the Efficient Markets Hypothesis, given the stock tickers of a portfolio of stocks.")
 st.write(" ")
 st.write(" As an example, you may adjust the slider to the amount that suits you, then copy and paste the following stock tickers in the input box (also, give it some time to load): aapl, tsla, msft, zm, amzn, jpm, gm, nflx, googl, fb")
@@ -213,7 +214,7 @@ if len(stock_data.columns) > 0:
 
   start_date = '2020-01-01'
   end_date = datetime.today().strftime('%Y-%m-%d')
-  logReturns['S&P500'] = web.DataReader('^GSPC', data_source='yahoo', start=start_date, end=end_date)['Adj Close']
+  logReturns['S&P500'] = yf.download("^GSPC", start=start_date, end=end_date)['Adj Close']
 
   port3 = [122]
   port3 = pd.DataFrame(port3)
