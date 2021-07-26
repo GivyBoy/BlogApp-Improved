@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 plt.style.use('seaborn-whitegrid')
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
-st.write("""# Portfolio Optimization""")
+st.write("""# Portfolio Optimization Web App""")
 st.write("""## Created by Anthony Givans""")
 st.write(" This web application seeks to construct the best weighted portfolio, using the Modern Portfolio Theory and the Efficient Markets Hypothesis, given the stock tickers of a portfolio of stocks.")
 st.write(" ")
