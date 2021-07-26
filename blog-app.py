@@ -36,7 +36,7 @@ try:
     stock_data = yf.download(data, start=start_date, end=end_date)['Adj Close']
 except:
     st.write('Enter the tickers(for example, AAPL for Apple) for the stocks.')
-    break
+
 
 if len(stock_data.columns) > 0:  
   weights = np.array([1/len(stock_data.columns) for i in range(1, len(stock_data.columns)+1)])
