@@ -1,5 +1,5 @@
 import pandas as pd
-from pandas_datareader import data as web
+import yfinance as yf
 import numpy as np
 import streamlit as st
 from datetime import datetime
@@ -28,17 +28,14 @@ if st.button('Submit'):
         data = data.replace(datum, '')
   st.success(f'Your portfolio consists of: {data}; the value is: ${investment} USD ')
 
-stocks = data.split()
-
 stock_data = pd.DataFrame()
 
 start_date = '2015-01-01'
 end_date = datetime.today().strftime('%Y-%m-%d')
-for stock in stocks:
-    try:
-        stock_data[stock] = web.DataReader(stock, data_source='yahoo', start=start_date, end=end_date)['Adj Close']
-    except:
-        st.write('Enter the tickers(for example, AAPL for Apple) for the stocks.')
+try:
+    stock_data = yf.download(data, start=start_date, end=end_date)['Adj Close']
+except:
+    st.write('Enter the tickers(for example, AAPL for Apple) for the stocks.')
         break
 
 if len(stock_data.columns) > 0:  
