@@ -9,7 +9,7 @@ st.set_option('deprecation.showPyplotGlobalUse', False)
 
 st.write("""# Portfolio Optimization Web App""")
 st.write("""## Created by Anthony Givans""")
-st.write(" This web application seeks to construct the best weighted portfolio, using the Modern Portfolio Theory and the Efficient Markets Hypothesis, given the stock tickers of a portfolio of stocks.")
+st.write(" This web application seeks to construct the best weighted portfolio, given the stock tickers of a portfolio of stocks, using the Modern Portfolio Theory and the Efficient Frontier.")
 st.write(" ")
 st.write(" As an example, you may adjust the slider to the amount that suits you, then copy and paste the following stock tickers in the input box (also, give it some time to load): aapl, tsla, msft, zm, amzn, jpm, gm, nflx, googl, fb")
 st.write(" ")
