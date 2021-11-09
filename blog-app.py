@@ -173,8 +173,8 @@ if len(stock_data.columns) > 0:
   DailyReturns['Portfolio Return - Weighted'] = round(DailyReturns['Portfolio Return - Weighted']*1000, 2)
 
 
-  e_value = [1000]
-  w_value = [1000]
+  e_value = [investment]
+  w_value = [investment]
 
   for i in range(len(DailyReturns.index)):
       e_value.append(round((e_value[i])+DailyReturns['Portfolio Return - Equal'][i],2))
@@ -201,7 +201,7 @@ if len(stock_data.columns) > 0:
 
   s_p = yf.download("^GSPC", start=start, end=end)['Adj Close']
   returns_SP = s_p.pct_change()
-  returns_SP = returns_SP*1000
+  returns_SP = returns_SP*investment
   DailyReturns["S&P500"] = returns_SP
 
   log_returns = DailyReturns.copy()
@@ -210,7 +210,7 @@ if len(stock_data.columns) > 0:
   log_returns['S&P500'] = returns_SP
   log_returns['S&P500'][0] = 0
 
-  sp_value = [1000]
+  sp_value = [investment]
 
   for i in range(len(log_returns.index)):
       sp_value.append(round((sp_value[i])+log_returns['S&P500'][i],2))
