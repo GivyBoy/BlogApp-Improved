@@ -169,8 +169,8 @@ if len(stock_data.columns) > 0:
   DailyReturns['Portfolio Return - Equal'] = equal
   DailyReturns['Portfolio Return - Weighted'] = weighted
   DailyReturns = DailyReturns/100
-  DailyReturns['Portfolio Return - Equal'] = round(DailyReturns['Portfolio Return - Equal']*1000, 2)
-  DailyReturns['Portfolio Return - Weighted'] = round(DailyReturns['Portfolio Return - Weighted']*1000, 2)
+  DailyReturns['Portfolio Return - Equal'] = round(DailyReturns['Portfolio Return - Equal']*investment, 2)
+  DailyReturns['Portfolio Return - Weighted'] = round(DailyReturns['Portfolio Return - Weighted']*investment, 2)
 
 
   e_value = [investment]
