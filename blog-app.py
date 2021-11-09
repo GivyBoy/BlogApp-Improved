@@ -18,7 +18,7 @@ if st.checkbox('Tap/Click to see examples of stock tickers'):
   examples = pd.read_csv('stocks.csv')
   st.write(examples)
 
-investment = st.slider('Investment Amount', 0, 10000, step=100)
+investment = st.slider('Investment Amount', 0, 100000, step=5000)
 st.write(f'The sum of money being invested is: ${investment} USD')
 
 
@@ -69,8 +69,8 @@ if len(stock_data.columns) > 0:
   st.pyplot()
   st.write(" The graph above shows the daily fluctuations (as a percent) of the stock price. Simply put, the smaller the spikes, the lower your blood pressure and stress levels will be :)")
   
-  number_of_portfolios = 2000
-  RF = 0
+  number_of_portfolios = 3000
+  RF = pd.read_html("https://www.treasury.gov/resource-center/data-chart-center/interest-rates/pages/textview.aspx?data=yield")[1]["10 yr"][5]
   portfolio_returns = []
   portfolio_risk = []
   sharpe_ratio_port = []
@@ -79,7 +79,7 @@ if len(stock_data.columns) > 0:
   st.write("""## Efficient Markets Frontier""")
   st.write(f' The number of portfolios being used is: {number_of_portfolios}')
   st.write(" Data from 2015 - 2019 is being used in the analysis below.")
-  st.write(" The following graphs give a visual representation of all 2000 portfolios that were computed.")
+  st.write(f" The following graphs give a visual representation of all {number_of_portfolios} portfolios that were computed.")
 
   for portfolio in range(number_of_portfolios):
           # generate a w random weight of length of number of stocks
@@ -120,7 +120,7 @@ if len(stock_data.columns) > 0:
 
   #plot data without indicators
   plt.figure(figsize=(10, 5))
-  plt.scatter(portfolio_risk, portfolio_returns, c=portfolio_returns/portfolio_risk,cmap='YlGnBu', alpha=0.8)
+  plt.scatter(portfolio_risk, portfolio_returns, c=portfolio_returns/portfolio_risk,cmap='YlGnBu', marker='.', alpha=0.8)
   plt.xlabel('Volatility (%)')
   plt.ylabel('Expected Returns (%)')
   plt.title('Portfolio Performance')
@@ -129,7 +129,7 @@ if len(stock_data.columns) > 0:
 
   #plot data with indicators
   plt.figure(figsize=(10, 5))
-  plt.scatter(portfolio_risk, portfolio_returns, c=portfolio_returns/portfolio_risk,cmap='YlGnBu', alpha=0.9)
+  plt.scatter(portfolio_risk, portfolio_returns, c=portfolio_returns/portfolio_risk,cmap='YlGnBu', marker='.', alpha=0.8)
   plt.xlabel('Volatility (%)')
   plt.ylabel('Expected Returns (%)')
   plt.colorbar(label='Sharpe ratio')
@@ -155,107 +155,94 @@ if len(stock_data.columns) > 0:
   st.write(f"Your Portfolio Risk is: {round(min_risk['Portfolio Risk'], 2)}%")
   st.write(f"Your Sharpe Ratio is: {round(min_risk['Sharpe Ratio'], 2)}")
   st.write('-----------------------------------------------------------------------')
-
-  DailyReturns = pd.DataFrame()
-  DailyReturns = daily_simple_returns_equal.sum(axis=1)
-  daily_simple_returns_equal['Daily Returns'] = DailyReturns
-
-  port = [122]
-  port = pd.DataFrame(port)
-
-  daily_simple_returns_equal['Portfolio Value - Equal'] = port
-
-  daily_simple_returns_equal.iloc[0, -1,] = investment
-
-  for i in range(1, len(daily_simple_returns_equal.index)):
-    daily_simple_returns_equal['Portfolio Value - Equal'][i] = daily_simple_returns_equal['Portfolio Value - Equal'][i-1] + daily_simple_returns_equal['Daily Returns'][i-1]
+  
+  DailyReturns = pd.DataFrame(daily_simple_returns_equal)
 
   updatedW = Highest_sharpe_port['Portfolio Weights']
-  cols = daily_simple_returns_weighted.columns.values
 
-  AdjustedR = pd.DataFrame()
-
-  for i in range(len(updatedW)):
-    Sum = daily_simple_returns_weighted[cols[i]]
-    DailyReturnsW = pd.DataFrame(Sum)
-    DailyReturns = DailyReturnsW.sum(axis=1) * (1 + round(updatedW[i], 3))
-    AdjustedR[f"{cols[i]}'s AR"] = round(DailyReturns, 2)
-
-  TotalAR = AdjustedR.sum(axis=1)
-
-  AdjustedR['Total AR'] = TotalAR
-
-  port2 = [122]
-  port2 = pd.DataFrame(port2)
-
-  AdjustedR['Portfolio Value - Weighted'] = port
-
-  AdjustedR.iloc[0, -1,] = investment
-
-  for i in range(1, len(AdjustedR.index)):
-    AdjustedR['Portfolio Value - Weighted'][i] = AdjustedR['Portfolio Value - Weighted'][i-1] + AdjustedR['Total AR'][i-1]
+  weighted = []
+  equal = []
+  for i in range(len(DailyReturns.index)):
+      equal.append(np.sum((DailyReturns.iloc[i] * weights)))
+      weighted.append(np.sum((DailyReturns.iloc[i] * updatedW)))
   
-  st.write("""# BACKTESTING""")
-  st.write(" The Weighted Portfolio is what the model above recommends, while the Equal Weighted Portfolio assumes that the portfolio is split evenly among all stocks.")
-  st.write(" The data being used is from the start of the trading year in 2020, until the most recent completed trading day. It serves as a means of testing whether the recommendations given by the model is profitable, relative to some other metrics.")
-  st.write(" ")  
-           
+  DailyReturns['Portfolio Return - Equal'] = equal
+  DailyReturns['Portfolio Return - Weighted'] = weighted
+  DailyReturns = DailyReturns/100
+  DailyReturns['Portfolio Return - Equal'] = round(DailyReturns['Portfolio Return - Equal']*1000, 2)
+  DailyReturns['Portfolio Return - Weighted'] = round(DailyReturns['Portfolio Return - Weighted']*1000, 2)
+
+
+  e_value = [1000]
+  w_value = [1000]
+
+  for i in range(len(DailyReturns.index)):
+      e_value.append(round((e_value[i])+DailyReturns['Portfolio Return - Equal'][i],2))
+      w_value.append(round((w_value[i])+DailyReturns['Portfolio Return - Weighted'][i],2))
+    
+  e_value = e_value[1:]
+  w_value = w_value[1:]
+
+  DailyReturns['Portfolio Value - Equal'] = e_value
+  DailyReturns['Portfolio Value - Weighted'] = w_value
+  
+
   plt.figure(figsize=(10, 5))
-  plt.plot(AdjustedR['Portfolio Value - Weighted'], c='red', label='Weighted Portfolio Value')
-  plt.plot(daily_simple_returns_equal['Portfolio Value - Equal'], c='black', label='Equal Weighted Portfolio Value')
+  plt.plot(DailyReturns['Portfolio Value - Weighted'], c='red', label='Weighted Portfolio Value')
+  plt.plot(DailyReturns['Portfolio Value - Equal'], c='black', label='Equal Weighted Portfolio Value')
   plt.title('BACKTESTING - Portfolio Values Overtime')
   plt.xlabel('Date')
   plt.ylabel('Portfolio Value ($USD)')
   plt.legend()
   st.pyplot()
-  st.write(" The graph above shows a comparison of the returns of both portfolios, since the beginning of 2020.")
 
-  logReturns = pd.DataFrame()
+  start = '2020-01-01'
+  end = datetime.today().strftime("%Y-%m-%d")
 
-  start_date = '2020-01-01'
-  end_date = datetime.today().strftime('%Y-%m-%d')
-  logReturns['S&P500'] = yf.download("^GSPC", start=start_date, end=end_date)['Adj Close']
+  s_p = yf.download("^GSPC", start=start, end=end)['Adj Close']
+  returns_SP = s_p.pct_change()
+  returns_SP = returns_SP*1000
+  DailyReturns["S&P500"] = returns_SP
 
-  port3 = [122]
-  port3 = pd.DataFrame(port3)
+  log_returns = DailyReturns.copy()
+  log_returns = log_returns[['Portfolio Value - Equal', 'Portfolio Value - Weighted']]
+  
+  log_returns['S&P500'] = returns_SP
+  log_returns['S&P500'][0] = 0
 
-  logReturns['S&P500 Returns'] = port3
-  for i in range(1, len(logReturns.index)):
-    logReturns['S&P500 Returns'][i] = logReturns['S&P500'][i] - logReturns['S&P500'][i-1]
+  sp_value = [1000]
 
-  logReturns['S&P500 Portfolio'] = port3
-  logReturns.iloc[0, -1,] = investment
+  for i in range(len(log_returns.index)):
+      sp_value.append(round((sp_value[i])+log_returns['S&P500'][i],2))
+  sp_value = sp_value[1:]
 
-  for i in range(1, len(logReturns.index)):
-    logReturns['S&P500 Portfolio'][i] = logReturns['S&P500 Portfolio'][i-1] + logReturns['S&P500 Returns'][i]
+  log_returns['S&P500 Value'] = sp_value
 
-  logReturns['Adjusted Weights'] = AdjustedR['Portfolio Value - Weighted']
-  logReturns['Equal Weights'] = daily_simple_returns_equal['Portfolio Value - Equal']
-
-  logReturns = np.log(logReturns)
-           
+  del log_returns['S&P500']
 
   plt.figure(figsize=(10, 5))
-  plt.plot(logReturns['Adjusted Weights'], c='red', label='Weighted Portfolio Value')
-  plt.plot(logReturns['Equal Weights'], c='black', label='Equal Weighted Portfolio Value')
-  plt.plot(logReturns['S&P500 Portfolio'], c='blue', label='S&P500')
-  plt.title('BACKTESTING - Log Returns')
+  plt.plot(log_returns['Portfolio Value - Weighted'], c='red', label='Weighted Portfolio Value')
+  plt.plot(log_returns['Portfolio Value - Equal'], c='black', label='Equal Weighted Portfolio Value')
+  plt.plot(log_returns['S&P500 Value'], c='blue', label='S&P500')
+  plt.title('BACKTESTING - Benchmark Returns')
   plt.xlabel('Date')
   plt.ylabel('Portfolio Value ($USD)')
   plt.legend(loc='lower right')
   st.pyplot()
-  st.write(" Both portfolios are being compared to the S&P500, which is the most ubiquitous stock performance benchmark.")
-  st.write('')
-           
-  if AdjustedR['Portfolio Value - Weighted'][-1] > daily_simple_returns_equal['Portfolio Value - Equal'][-1]:
-    st.write(f" The model was right! You would've made an extra ${round(AdjustedR['Portfolio Value - Weighted'][-1] - daily_simple_returns_equal['Portfolio Value - Equal'][-1], 2)}!")
+
+  if log_returns['Portfolio Value - Weighted'][-1] > log_returns['Portfolio Value - Equal'][-1]:
+    st.write(f"The model was right! You would've made an extra ${round(log_returns['Portfolio Value - Weighted'][-1] - log_returns['Portfolio Value - Equal'][-1], 2)} more than the equally weighted portfolio and ${round(log_returns['Portfolio Value - Weighted'][-1] - log_returns['S&P500 Value'][-1], 2)} more than the S&P500! Meaning, you would've outperformed the most uniquitous benchmark in Finance by {round(((log_returns['Portfolio Value - Weighted'][-1] - log_returns['S&P500 Value'][-1])/log_returns['S&P500 Value'][-1]), 2)*100}%!")
   else:
     st.write(' The pandemic really hit hard! Not even the model could have predicted it.')
-  
+
   st.write('')
   st.write(' Created by Anthony Givans')
 else:
   st.write()
+
+
+
+
 
 
 
