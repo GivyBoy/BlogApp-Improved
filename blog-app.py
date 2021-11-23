@@ -15,7 +15,7 @@ st.write(" In this project, I examine whether the MPT is still applicable today 
 st.write(" ")
 st.write(" **The Sharpe Ratio is used to categorize ‘expected return for a given level of risk’.")
 st.write(" ")
-st.write(" As an example, you may adjust the slider to the amount that suits you, then copy and paste the following stock tickers in the input box (also, give it some time to load): aapl, tsla, msft, zm, amzn, jpm, gm, nflx, googl, fb")
+st.write(" As an example, you may adjust the slider to the amount that suits you, then copy and paste the following stock tickers in the input box (also, give it some time to load): aapl, tsla, msft, amzn, gm, nflx, googl, fb")
 st.write(" ")
 
 if st.checkbox('Tap/Click to see examples of stock tickers'):
