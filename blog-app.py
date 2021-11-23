@@ -235,7 +235,7 @@ if len(stock_data.columns) > 0:
   st.pyplot()
 
   if log_returns['Portfolio Value - Weighted'][-1] > log_returns['Portfolio Value - Equal'][-1]:
-    st.write(f"The model was right! You would've made an extra ${round(log_returns['Portfolio Value - Weighted'][-1] - log_returns['Portfolio Value - Equal'][-1], 2)} more than the equally weighted portfolio and ${round(log_returns['Portfolio Value - Weighted'][-1] - log_returns['S&P500 Value'][-1], 2)} more than the S&P500! Meaning, you would've outperformed the most uniquitous benchmark in Finance by {round(((log_returns['Portfolio Value - Weighted'][-1] - log_returns['S&P500 Value'][-1])/log_returns['S&P500 Value'][-1]), 2)*100}%!")
+    st.write(f"The model was right! You would've made ${round(log_returns['Portfolio Value - Weighted'][-1] - log_returns['Portfolio Value - Equal'][-1], 2)} more than the equally weighted portfolio and ${round(log_returns['Portfolio Value - Weighted'][-1] - log_returns['S&P500 Value'][-1], 2)} more than the S&P500! Meaning, you would've outperformed the most uniquitous benchmark in Finance by {round(((log_returns['Portfolio Value - Weighted'][-1] - log_returns['S&P500 Value'][-1])/log_returns['S&P500 Value'][-1]), 2)*100}%!")
   else:
     st.write(' The pandemic really hit hard! Not even the model could have predicted it.')
 
