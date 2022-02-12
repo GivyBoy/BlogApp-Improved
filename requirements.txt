@@ -5,3 +5,4 @@ datetime
 streamlit==0.79.0
 matplotlib
 html5lib
+beautifulsoup4
