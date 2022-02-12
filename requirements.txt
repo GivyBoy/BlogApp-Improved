@@ -4,3 +4,4 @@ numpy==1.18.5
 datetime
 streamlit==0.79.0
 matplotlib
+html5lib
