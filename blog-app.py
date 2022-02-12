@@ -74,7 +74,7 @@ if len(stock_data.columns) > 0:
   st.write(" The graph above shows the daily fluctuations (as a percent) of the stock price. Simply put, the smaller the spikes, the lower your blood pressure and stress levels will be :)")
   
   number_of_portfolios = 3000
-  RF = 0.07
+  RF = 0.025
   portfolio_returns = []
   portfolio_risk = []
   sharpe_ratio_port = []
